@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuarioService } from 'src/app/servicios/Usuario.service';
 
 @Component({
   selector: 'app-turno',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TurnoComponent implements OnInit {
 
-  constructor() { }
+  private perfil;
+
+  constructor(private usuarioService: UsuarioService) {
+    this.perfil = this.usuarioService.usuario.Perfil;
+  }
 
   ngOnInit() {
   }

@@ -19,19 +19,22 @@ export class RegistroComponent implements OnInit {
   emailModel: string;
   passwordModel: string;
   usuario: UsuarioInterface;
+  captchaVerificado: boolean;
 
   porcentajeUpload: Observable<number>;
   urlImagen: Observable<string>;
   noCargando = true;
 
-  constructor(private usuarioService: UsuarioService, private storage: AngularFireStorage) {
+  constructor(private usuarioService: UsuarioService, private storage: AngularFireStorage, private elRef: ElementRef) {
     this.imgName = "Seleccionar imágen..";
     this.usuario = this.usuarioService.UsuarioVacio();
+    this.captchaVerificado = false;
   }
 
   ngOnInit() { }
 
   Registrarse() {
+
     this.usuario.Perfil = Perfil[(<HTMLInputElement>document.getElementById("perfil")).value];
     this.usuario.Email = this.emailModel;
     this.usuario.Nombre = this.nombreModel;
@@ -41,7 +44,7 @@ export class RegistroComponent implements OnInit {
     if (!this.usuario.ImagenUrl) {
       this.usuario.ImagenUrl = "assets/img/default-user.png";
     }
-    
+
     this.usuarioService.RegistrarUsuario(this.usuario);
   }
 
@@ -64,5 +67,9 @@ export class RegistroComponent implements OnInit {
       this.urlImagen = empty();
       this.noCargando = true;
     }
+  }
+
+  resolved(captchaResponse: string) {
+    this.captchaVerificado = true;
   }
 }

@@ -19,6 +19,7 @@ export class CabeceraComponent implements OnInit {
 
   imagenUrl = "";
   nombre = "";
+  perfil: Perfil;
 
   constructor(private usuarioService: UsuarioService, private dataApi: DataApiService) { }
 
@@ -36,39 +37,14 @@ export class CabeceraComponent implements OnInit {
 
             this.imagenUrl = userx.ImagenUrl;
             this.nombre = userx.Nombre;
-
-            switch (this.usuarioService.usuario.Perfil) {
-              case Perfil.Administrador:
-                this.administrador = true;
-                this.cliente = false;
-                this.especialista = false;
-                this.recepcionista = false;
-                break;
-              case Perfil.Cliente:
-                this.cliente = true;
-                this.administrador = false;
-                this.especialista = false;
-                this.recepcionista = false;
-                break;
-              case Perfil.Recepcionista:
-                this.recepcionista = true;
-                this.administrador = false;
-                this.cliente = false;
-                this.especialista = false;
-                break;
-              case Perfil.Especialista:
-                this.especialista = true;
-                this.administrador = false;
-                this.cliente = false;
-                this.recepcionista = false;
-                break;
-            }
+            this.perfil = userx.Perfil;
             this.estaLogeado = true;
           }
           else {
             this.imagenUrl = "";
             this.nombre = "";
             this.estaLogeado = false;
+            this.perfil = null;
           }
 
         });
@@ -77,14 +53,15 @@ export class CabeceraComponent implements OnInit {
         this.imagenUrl = "";
         this.nombre = "";
         this.estaLogeado = false;
+        this.perfil = null;
       }
     });
-
   }
 
   Deslogearse() {
     this.imagenUrl = "";
     this.nombre = "";
     this.usuarioService.DeslogearUsuario();
+    this.perfil = null;
   }
 }

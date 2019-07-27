@@ -6,7 +6,7 @@ import { UsuarioInterface, Perfil } from '../clases/Usuario';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { NotificationsService } from 'angular2-notifications';
 import { DataApiService } from './DataApi.service';
-import { Observable } from 'rxjs';
+
 
 @Injectable({
     providedIn: 'root'
@@ -139,6 +139,7 @@ export class UsuarioService {
     }
 
     EstadoLogeo() {
+
         this.afsAuth.auth.onAuthStateChanged(
             (user) => {
                 if (user) {
@@ -157,8 +158,3 @@ export class UsuarioService {
         );
     }
 }
-
-
-
-
-

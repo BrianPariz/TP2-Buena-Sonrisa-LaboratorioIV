@@ -12,8 +12,8 @@
 
               <div class="form-group">
                 <label for="name">Nombre</label>
-                <input type="text" class="form-control" name="name" id="name" [(ngModel)]="nombreModel"
-                  #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required autofocus>
+                <input type="text" class="form-control" name="name" id="name" [(ngModel)]="nombreModel" #name="ngModel"
+                  [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required autofocus>
                 <div *ngIf="f.submitted && name.invalid" class="invalid-feedback">
                   <div *ngIf="name.errors.required">Nombre requerido</div>
                 </div>
@@ -72,9 +72,13 @@
                 </div>
               </form>
 
+              <form class="margin-bottom">
+                <re-captcha (resolved)="resolved($event)" siteKey="6LeUMq8UAAAAAKO61peKaT7RknpnQe7G5M56hz04"></re-captcha>
+              </form>
+
               <div class="form-group no-margin">
 
-                <ng-container *ngIf="(urlImagen | async) || noCargando; else registroDeshabilitado">
+                <ng-container *ngIf="(urlImagen | async) || noCargando && captchaVerificado; else registroDeshabilitado">
                   <button type="submit" class="btn btn-primary btn-block">
                     Registrarse
                   </button>

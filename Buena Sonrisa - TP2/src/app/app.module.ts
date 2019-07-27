@@ -27,6 +27,9 @@ import { ListaUsuariosComponent } from './componentes/lista-usuarios/lista-usuar
 import { TurnoCreacionComponent } from './componentes/turno-creacion/turno-creacion.component';
 import { TurnoListaComponent } from './componentes/turno-lista/turno-lista.component';
 import { TurnoComponent } from './componentes/turno/turno.component';
+import { ModalEncuestaComponent } from './componentes/modal-encuesta/modal-encuesta.component';
+
+import { RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,8 @@ import { TurnoComponent } from './componentes/turno/turno.component';
     ListaUsuariosComponent,
     TurnoCreacionComponent,
     TurnoListaComponent,
-    TurnoComponent
+    TurnoComponent,
+    ModalEncuestaComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +66,8 @@ import { TurnoComponent } from './componentes/turno/turno.component';
       showProgressBar: true,
       pauseOnHover: true,
       clickToClose: true
-    })
+    }),
+    RecaptchaModule
   ],
   exports: [
     MaterialModule,
