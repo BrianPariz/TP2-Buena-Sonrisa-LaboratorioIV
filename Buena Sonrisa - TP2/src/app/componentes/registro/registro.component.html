@@ -2,9 +2,9 @@
   <div class="container h-100">
     <div class="row justify-content-md-center h-100">
       <div class="card-wrapper registro-pagina">
-          <button (click)="crearTest()" class="btn btn-primary btn-block">
-              Test
-            </button>
+        <button (click)="crearTest()" class="btn btn-primary btn-block">
+          Test
+        </button>
         <div class="brand">
           <img src="/assets/img/logoDentista.png">
         </div>
@@ -42,11 +42,21 @@
 
               <div class="form-group">
                 <label for="perfil">Perfil</label>
-                <select class="form-control" name="perfil" id="perfil">
+                <select class="form-control" name="perfil" id="perfil" (change)="changePerfil($event.target.value)">
                   <option [ngValue]="Cliente">Cliente</option>
                   <option [ngValue]="Recepcionista">Recepcionista</option>
                   <option [ngValue]="Especialista">Especialista</option>
                   <option [ngValue]="Administrador">Administrador</option>
+                </select>
+              </div>
+
+              <div class="form-group" *ngIf="perfil == 'Especialista'">
+                <label for="especialidad">Especialidad</label>
+                <select class="form-control" name="especialidad" id="especialidad">
+                  <option [ngValue]="Oncologia">Oncología</option>
+                  <option [ngValue]="Dermatologia">Dermatología</option>
+                  <option [ngValue]="Dentista">Dentista</option>
+                  <option [ngValue]="Psicologia">Psicología</option>
                 </select>
               </div>
 
@@ -76,12 +86,14 @@
               </form>
 
               <form class="margin-bottom">
-                <re-captcha (resolved)="resolved($event)" siteKey="6LeUMq8UAAAAAKO61peKaT7RknpnQe7G5M56hz04"></re-captcha>
+                <re-captcha (resolved)="resolved($event)" siteKey="6LeUMq8UAAAAAKO61peKaT7RknpnQe7G5M56hz04">
+                </re-captcha>
               </form>
 
               <div class="form-group no-margin">
 
-                <ng-container *ngIf="(urlImagen | async) || noCargando && captchaVerificado; else registroDeshabilitado">
+                <ng-container
+                  *ngIf="(urlImagen | async) || noCargando && captchaVerificado; else registroDeshabilitado">
                   <button type="submit" class="btn btn-primary btn-block">
                     Registrarse
                   </button>

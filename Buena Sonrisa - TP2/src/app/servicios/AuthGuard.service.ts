@@ -34,7 +34,7 @@ export class AuthGuardService implements CanActivate {
         }
       }
 
-      if (url == '/salasdeespera') {
+      if (url == '/saladeespera') {
         if (this.usuarioService.usuario.Perfil == Perfil.Recepcionista) {
           return true;
         }

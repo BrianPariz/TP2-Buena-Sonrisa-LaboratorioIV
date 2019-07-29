@@ -5,12 +5,20 @@ export enum Perfil {
     Administrador = 'Administrador'
 }
 
+export enum Especialidad {
+    Oncologia = 'Oncología',
+    Dermatologia = 'Dermatología',
+    Dentista = 'Dentista',
+    Psicologia = 'Psicología'
+}
+
 export interface UsuarioInterface {
-    Uid:string;
-    Nombre:string;
-    Email:string;
-    Password:string;
-    ImagenUrl?:string;
-    Perfil?:Perfil;
-    Activo?:boolean;
+    Uid: string;
+    Nombre: string;
+    Email: string;
+    Password: string;
+    ImagenUrl?: string;
+    Perfil?: Perfil;
+    Especialidad?: Especialidad;
+    Activo?: boolean;
 }

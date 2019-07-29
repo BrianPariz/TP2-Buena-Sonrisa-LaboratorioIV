@@ -1,10 +1,10 @@
-export enum EstadoSala {
+export enum EstadoConsultorio {
     Libre = "Libre",
-    Ocupada = "Ocupada",
+    Ocupado = "Ocupado",
 }
 
-export interface SalaInterface {
+export interface ConsultorioInterface {
     id: string;
     Codigo: string;
-    Estado: EstadoSala;
+    Estado: EstadoConsultorio;
 }

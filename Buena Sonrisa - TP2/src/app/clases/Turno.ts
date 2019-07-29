@@ -1,4 +1,5 @@
 import { EncuestaInterface } from './Encuesta';
+import { Especialidad } from './Usuario';
 
 export enum EstadoTurno {
     Pendiente = 'Pendiente',
@@ -11,10 +12,11 @@ export interface TurnoInterface {
     NombreCliente: string;
     UidEspecialista: string;
     NombreEspecialista: string;
+    Especialidad: Especialidad;
     Fecha: Date;
     Estado: EstadoTurno;
     Encuesta: EncuestaInterface;
     ObservacionesEspecialista: string;
-    Sala: string;
-    SalaId: string;
+    Consultorio: string;
+    ConsultorioId: string;
 }

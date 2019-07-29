@@ -35,7 +35,7 @@
           <mat-select [formControl]="especialistaForm" required>
             <mat-option *ngIf="especialistas.length == 0">--</mat-option>
             <mat-option *ngFor="let especialista of especialistas" [value]="especialista">
-              {{especialista.Nombre}}
+              {{especialista.Nombre}} - {{especialista.Especialidad}}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="especialistaForm.hasError('required') && especialistas.length > 0">Por favor,

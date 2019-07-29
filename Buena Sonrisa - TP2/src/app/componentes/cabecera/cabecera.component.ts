@@ -30,21 +30,24 @@ export class CabeceraComponent implements OnInit {
   TraerUsuarioActual() {
     this.usuarioService.EstaLogeado().subscribe(user => {
       if (user) {
+        debugger;
         this.dataApi.TraerUno(user.uid, 'usuarios').pipe(take(1)).subscribe(userx => {
 
-          if (userx.Activo) {
-            this.usuarioService.usuario = userx;
+          if (userx) {
+            if (userx.Activo) {
+              this.usuarioService.usuario = userx;
 
-            this.imagenUrl = userx.ImagenUrl;
-            this.nombre = userx.Nombre;
-            this.perfil = userx.Perfil;
-            this.estaLogeado = true;
-          }
-          else {
-            this.imagenUrl = "";
-            this.nombre = "";
-            this.estaLogeado = false;
-            this.perfil = null;
+              this.imagenUrl = userx.ImagenUrl;
+              this.nombre = userx.Nombre;
+              this.perfil = userx.Perfil;
+              this.estaLogeado = true;
+            }
+            else {
+              this.imagenUrl = "";
+              this.nombre = "";
+              this.estaLogeado = false;
+              this.perfil = null;
+            }
           }
 
         });

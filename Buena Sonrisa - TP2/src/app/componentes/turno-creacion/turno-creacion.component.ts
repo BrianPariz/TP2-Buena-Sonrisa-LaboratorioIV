@@ -42,9 +42,9 @@ export class TurnoCreacionComponent implements OnInit {
   }
 
   CrearTurno() {
-    this.dataApi.TraerTodos('salas').subscribe(salas => {
+    this.dataApi.TraerTodos('consultorios').subscribe(consultorios => {
 
-      let sala = salas[Math.floor((Math.random() * 5))];
+      let consultorio = consultorios[Math.floor((Math.random() * 5))];
       let especialista = this.especialistaForm.value;
       let cliente = this.clienteForm.value;
 
@@ -53,19 +53,20 @@ export class TurnoCreacionComponent implements OnInit {
         NombreCliente: cliente.Nombre,
         UidEspecialista: especialista.Uid,
         NombreEspecialista: especialista.Nombre,
+        Especialidad: especialista.Especialidad,
         Fecha: this.fechaForm.value,
         Estado: EstadoTurno.Pendiente,
         Encuesta: null,
         ObservacionesEspecialista: "",
-        Sala: sala.Codigo,
-        SalaId: sala.id
+        Consultorio: consultorio.Codigo,
+        ConsultorioId: consultorio.id
       }
 
       this.dataApi.AgregarUno(turno, 'turnos');
 
       Swal.fire(
         'Se creó el turno con éxito!',
-        `El turno será el día ${turno.Fecha.toLocaleDateString()} en la sala: ${turno.Sala}.`,
+        `El turno será el día ${turno.Fecha.toLocaleDateString()} en el consultorio: ${turno.Consultorio}.`,
         'success'
       )
     });

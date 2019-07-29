@@ -3,7 +3,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { UsuarioService } from 'src/app/servicios/Usuario.service';
 import { finalize } from 'rxjs/operators';
 import { Observable, empty } from 'rxjs';
-import { Perfil, UsuarioInterface } from 'src/app/clases/Usuario';
+import { Perfil, UsuarioInterface, Especialidad } from 'src/app/clases/Usuario';
 
 @Component({
   selector: 'app-registro',
@@ -14,14 +14,14 @@ export class RegistroComponent implements OnInit {
 
   @ViewChild("imgUsuario", { static: false }) InputImagenUser: ElementRef;
 
+  private perfil;
   imgName: string;
   nombreModel: string;
   emailModel: string;
   passwordModel: string;
   usuario: UsuarioInterface;
   captchaVerificado: boolean;
-  accepted:boolean;
-
+  accepted: boolean;
   porcentajeUpload: Observable<number>;
   urlImagen: Observable<string>;
   noCargando = true;
@@ -35,8 +35,13 @@ export class RegistroComponent implements OnInit {
   ngOnInit() { }
 
   Registrarse() {
-
+    debugger;
     this.usuario.Perfil = Perfil[(<HTMLInputElement>document.getElementById("perfil")).value];
+
+    if (this.usuario.Perfil == Perfil.Especialista) {
+      this.usuario.Especialidad = Especialidad[(<HTMLInputElement>document.getElementById("especialidad")).value];
+    }
+
     this.usuario.Email = this.emailModel;
     this.usuario.Nombre = this.nombreModel;
     this.usuario.Password = this.passwordModel;
@@ -79,5 +84,9 @@ export class RegistroComponent implements OnInit {
     this.emailModel = "pirulo@gmail.com";
     this.passwordModel = "olaquetal";
     this.accepted = true;
+  }
+
+  changePerfil(perfil) {
+    this.perfil = perfil;
   }
 }

@@ -9,7 +9,7 @@ import { ModalEncuestaComponent } from '../modal-encuesta/modal-encuesta.compone
 import { EncuestaInterface } from 'src/app/clases/Encuesta';
 import { NotificationsService } from 'angular2-notifications';
 import { ModalObservacionesComponent } from '../modal-observaciones/modal-observaciones.component';
-import { EstadoSala } from 'src/app/clases/Sala';
+import { EstadoConsultorio } from 'src/app/clases/Sala';
 
 @Component({
   selector: 'app-turno-lista',
@@ -18,9 +18,9 @@ import { EstadoSala } from 'src/app/clases/Sala';
 })
 export class TurnoListaComponent implements OnInit {
 
-  private columsCliente: string[] = ['NombreEspecialista', 'Fecha', 'Estado', 'Encuesta', 'Sala'];
-  private columsRecepcionista: string[] = ['NombreEspecialista', 'NombreCliente', 'Fecha', 'Estado', 'Sala', 'CancelarTurno'];
-  private columsEspecialista: string[] = ['NombreCliente', 'Fecha', 'Estado', 'Sala', 'FinalizarTurno'];
+  private columsCliente: string[] = ['NombreEspecialista', 'Especialidad', 'Fecha', 'Estado', 'Encuesta', 'Consultorio'];
+  private columsRecepcionista: string[] = ['NombreEspecialista', 'Especialidad', 'NombreCliente', 'Fecha', 'Estado', 'Consultorio', 'CancelarTurno'];
+  private columsEspecialista: string[] = ['NombreCliente', 'Fecha', 'Estado', 'Consultorio', 'FinalizarTurno'];
 
   private perfil;
   private turnos: TurnoInterface[];
@@ -36,8 +36,9 @@ export class TurnoListaComponent implements OnInit {
       .subscribe(turnos => {
         if (this.perfil == Perfil.Cliente)
           this.turnos = turnos.filter(x => x.UidCliente == this.usuarioService.usuario.Uid);
-        else if (this.perfil == Perfil.Recepcionista)
+        else if (this.perfil == Perfil.Recepcionista) {
           this.turnos = turnos;
+        }
         else if (this.perfil == Perfil.Especialista)
           this.turnos = turnos.filter(x => x.UidEspecialista == this.usuarioService.usuario.Uid);;
 
@@ -65,7 +66,7 @@ export class TurnoListaComponent implements OnInit {
       Opinion: ""
     }
 
-    const dialogRef = this.dialog.open(ModalEncuestaComponent, { 
+    const dialogRef = this.dialog.open(ModalEncuestaComponent, {
       data: { encuesta: encuesta }
     });
 
@@ -84,9 +85,9 @@ export class TurnoListaComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
 
-        this.dataApi.TraerUno(turno.SalaId, 'salas').pipe(take(1)).subscribe(sala => {
-          sala.Estado = EstadoSala.Libre;
-          this.dataApi.ModificarUno(sala, "salas");
+        this.dataApi.TraerUno(turno.ConsultorioId, 'consultorios').pipe(take(1)).subscribe(consultorio => {
+          consultorio.Estado = EstadoConsultorio.Libre;
+          this.dataApi.ModificarUno(consultorio, "consultorios");
         });
 
         turno.Estado = EstadoTurno.Finalizado;
