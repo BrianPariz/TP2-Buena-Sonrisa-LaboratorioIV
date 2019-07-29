@@ -2,6 +2,25 @@
   <div class="container h-100">
     <div class="row justify-content-md-center h-100">
       <div class="card-wrapper">
+
+        <!-- test -->
+        <div class="row">
+          <div class="col-md-3"><button (click)="testAdmin()" class="btn btn-primary btn-block">
+              Test Admin.
+            </button></div>
+          <div class="col-md-3"><button (click)="testRecepcionista()" class="btn btn-primary btn-block">
+              Test Recep.
+            </button></div>
+          <div class="col-md-3"><button (click)="testCliente()" class="btn btn-primary btn-block">
+              Test Cliente
+            </button></div>
+          <div class="col-md-3"><button (click)="testEspecialista()" class="btn btn-primary btn-block">
+              Test Espec.
+            </button></div>
+        </div>
+
+        <!-- fin test -->
+
         <div class="brand">
           <img src="/assets/img/logoDentista.png">
         </div>
@@ -14,7 +33,7 @@
                 <label for="email">Dirección de Email</label>
 
                 <input id="email" type="email" class="form-control" name="email" [(ngModel)]="emailModel"
-                #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required autofocus>
+                  #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required autofocus>
                 <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
                   <div *ngIf="email.errors.required">Ingrese el Email</div>
                 </div>
@@ -27,7 +46,7 @@
                   </a> -->
                 </label>
                 <input id="password" type="password" class="form-control" name="password" [(ngModel)]="passwordModel"
-                #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required>
+                  #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required>
                 <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
                   <div *ngIf="password.errors.required">Ingrese la contraseña</div>
                 </div>

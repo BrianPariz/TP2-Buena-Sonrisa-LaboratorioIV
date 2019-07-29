@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { DataApiService } from 'src/app/servicios/DataApi.service';
 import { TurnoInterface, EstadoTurno } from 'src/app/clases/Turno';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { UsuarioService } from 'src/app/servicios/Usuario.service';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Perfil } from 'src/app/clases/Usuario';
+import { ModalEncuestaComponent } from '../modal-encuesta/modal-encuesta.component';
+import { EncuestaInterface } from 'src/app/clases/Encuesta';
+import { NotificationsService } from 'angular2-notifications';
+import { ModalObservacionesComponent } from '../modal-observaciones/modal-observaciones.component';
+import { EstadoSala } from 'src/app/clases/Sala';
 
 @Component({
   selector: 'app-turno-lista',
@@ -13,16 +18,16 @@ import { Perfil } from 'src/app/clases/Usuario';
 })
 export class TurnoListaComponent implements OnInit {
 
-  private columsCliente: string[] = ['NombreEspecialista', 'Fecha', 'Estado', 'Encuesta'];
-  private columsRecepcionista: string[] = ['NombreEspecialista', 'NombreCliente', 'Fecha', 'Estado', 'CancelarTurno'];
-  private columsEspecialista: string[] = ['NombreCliente', 'Fecha', 'Estado', 'FinalizarTurno'];
+  private columsCliente: string[] = ['NombreEspecialista', 'Fecha', 'Estado', 'Encuesta', 'Sala'];
+  private columsRecepcionista: string[] = ['NombreEspecialista', 'NombreCliente', 'Fecha', 'Estado', 'Sala', 'CancelarTurno'];
+  private columsEspecialista: string[] = ['NombreCliente', 'Fecha', 'Estado', 'Sala', 'FinalizarTurno'];
 
   private perfil;
   private turnos: TurnoInterface[];
   private dataSource = new MatTableDataSource(this.turnos);
   private noData = this.dataSource.connect().pipe(map((data: any[]) => data.length === 0));
 
-  constructor(private dataApi: DataApiService, private usuarioService: UsuarioService) {
+  constructor(private dataApi: DataApiService, private usuarioService: UsuarioService, private dialog: MatDialog, private ns: NotificationsService) {
     this.perfil = this.usuarioService.usuario.Perfil;
   }
 
@@ -50,7 +55,45 @@ export class TurnoListaComponent implements OnInit {
     this.dataApi.ModificarUno(turno, 'turnos');
   }
 
+  realizarEncuesta(turno) {
+    var encuesta: EncuestaInterface = {
+      NombreCliente: turno.NombreCliente,
+      NombreEspecialista: turno.NombreEspecialista,
+      UidCliente: turno.UidCliente,
+      UidEspecialista: turno.UidEspecialista,
+      Puntuacion: 0,
+      Opinion: ""
+    }
+
+    const dialogRef = this.dialog.open(ModalEncuestaComponent, { 
+      data: { encuesta: encuesta }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        turno.Encuesta = result;
+        this.dataApi.ModificarUno(turno, 'turnos');
+        this.ns.success("Se envió la encuesta exitosamente");
+      }
+    });
+  }
+
   finalizarTurno(turno) {
-    //modal
+    const dialogRef = this.dialog.open(ModalObservacionesComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+
+        this.dataApi.TraerUno(turno.SalaId, 'salas').pipe(take(1)).subscribe(sala => {
+          sala.Estado = EstadoSala.Libre;
+          this.dataApi.ModificarUno(sala, "salas");
+        });
+
+        turno.Estado = EstadoTurno.Finalizado;
+        turno.ObservacionesEspecialista = result;
+        this.dataApi.ModificarUno(turno, 'turnos');
+        this.ns.success("Se envió la observación exitosamente");
+      }
+    });
   }
 }

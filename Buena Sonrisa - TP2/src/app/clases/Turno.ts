@@ -1,3 +1,5 @@
+import { EncuestaInterface } from './Encuesta';
+
 export enum EstadoTurno {
     Pendiente = 'Pendiente',
     Cancelado = 'Cancelado',
@@ -11,4 +13,8 @@ export interface TurnoInterface {
     NombreEspecialista: string;
     Fecha: Date;
     Estado: EstadoTurno;
+    Encuesta: EncuestaInterface;
+    ObservacionesEspecialista: string;
+    Sala: string;
+    SalaId: string;
 }

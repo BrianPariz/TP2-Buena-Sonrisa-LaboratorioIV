@@ -33,6 +33,12 @@ export class AuthGuardService implements CanActivate {
           return true;
         }
       }
+
+      if (url == '/salasdeespera') {
+        if (this.usuarioService.usuario.Perfil == Perfil.Recepcionista) {
+          return true;
+        }
+      }
     }
 
     this.router.navigate([this.usuarioService.getInicioUrl()]);

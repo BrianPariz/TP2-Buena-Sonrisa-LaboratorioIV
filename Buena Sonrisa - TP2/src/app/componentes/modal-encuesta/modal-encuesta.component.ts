@@ -1,5 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { TurnoListaComponent } from '../turno-lista/turno-lista.component';
+import { EncuestaInterface } from 'src/app/clases/Encuesta';
+import { FormControl, Validators } from '@angular/forms';
 // import { MateriaListaComponent } from '../materia-lista/materia-lista.component';
 // import { MateriaInterface } from 'src/app/clases/Materia';
 
@@ -10,14 +13,22 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class ModalEncuestaComponent {
 
-  // private materia: MateriaInterface;
+  private encuesta: EncuestaInterface;
+  private puntuacionCtrol = new FormControl('', [Validators.required]);
+  private opinionCtrol = new FormControl('', Validators.required);
 
-  // constructor(public dialogRef: MatDialogRef<MateriaListaComponent>,
-  //   @Inject(MAT_DIALOG_DATA) public _materia: MateriaInterface) {
-  //   this.materia = _materia["materia"];
-  // }
+  constructor(public dialogRef: MatDialogRef<TurnoListaComponent>
+    , @Inject(MAT_DIALOG_DATA) public _Encuesta: EncuestaInterface) {
+    this.encuesta = _Encuesta['encuesta'];
+  }
 
-  // onNoClick(): void {
-  //   this.dialogRef.close();
-  // }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  aceptar() {
+    this.encuesta.Puntuacion = this.puntuacionCtrol.value;
+    this.encuesta.Opinion = this.opinionCtrol.value;
+    this.dialogRef.close(this.encuesta);
+  }
 }

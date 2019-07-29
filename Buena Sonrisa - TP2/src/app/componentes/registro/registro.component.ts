@@ -20,6 +20,7 @@ export class RegistroComponent implements OnInit {
   passwordModel: string;
   usuario: UsuarioInterface;
   captchaVerificado: boolean;
+  accepted:boolean;
 
   porcentajeUpload: Observable<number>;
   urlImagen: Observable<string>;
@@ -71,5 +72,12 @@ export class RegistroComponent implements OnInit {
 
   resolved(captchaResponse: string) {
     this.captchaVerificado = true;
+  }
+
+  crearTest() {
+    this.nombreModel = "pirulo";
+    this.emailModel = "pirulo@gmail.com";
+    this.passwordModel = "olaquetal";
+    this.accepted = true;
   }
 }

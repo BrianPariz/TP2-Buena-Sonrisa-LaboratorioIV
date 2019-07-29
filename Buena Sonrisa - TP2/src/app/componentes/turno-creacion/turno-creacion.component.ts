@@ -4,6 +4,8 @@ import { UsuarioInterface, Perfil } from 'src/app/clases/Usuario';
 import { DataApiService } from 'src/app/servicios/DataApi.service';
 import { TurnoInterface, EstadoTurno } from 'src/app/clases/Turno';
 import { UsuarioService } from 'src/app/servicios/Usuario.service';
+import { NotificationsService } from 'angular2-notifications';
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-turno-creacion',
@@ -23,7 +25,7 @@ export class TurnoCreacionComponent implements OnInit {
   especialistaForm = new FormControl('', Validators.required);
   clienteForm = new FormControl('', Validators.required);
 
-  constructor(private fb: FormBuilder, private dataApi: DataApiService, private usuarioService: UsuarioService) {
+  constructor(private fb: FormBuilder, private dataApi: DataApiService, private usuarioService: UsuarioService, private ns: NotificationsService) {
     this.perfil = this.usuarioService.usuario.Perfil;
     this.user = this.usuarioService.usuario;
   }
@@ -40,20 +42,33 @@ export class TurnoCreacionComponent implements OnInit {
   }
 
   CrearTurno() {
-    debugger;
-    let especialista = this.especialistaForm.value;
-    let cliente = this.clienteForm.value;
+    this.dataApi.TraerTodos('salas').subscribe(salas => {
 
-    let turno: TurnoInterface = {
-      UidCliente: cliente.Uid,
-      NombreCliente: cliente.Nombre,
-      UidEspecialista: especialista.Uid,
-      NombreEspecialista: especialista.Nombre,
-      Fecha: this.fechaForm.value,
-      Estado: EstadoTurno.Pendiente
-    }
+      let sala = salas[Math.floor((Math.random() * 5))];
+      let especialista = this.especialistaForm.value;
+      let cliente = this.clienteForm.value;
 
-    this.dataApi.AgregarUno(turno, 'turnos');
+      let turno: TurnoInterface = {
+        UidCliente: cliente.Uid,
+        NombreCliente: cliente.Nombre,
+        UidEspecialista: especialista.Uid,
+        NombreEspecialista: especialista.Nombre,
+        Fecha: this.fechaForm.value,
+        Estado: EstadoTurno.Pendiente,
+        Encuesta: null,
+        ObservacionesEspecialista: "",
+        Sala: sala.Codigo,
+        SalaId: sala.id
+      }
+
+      this.dataApi.AgregarUno(turno, 'turnos');
+
+      Swal.fire(
+        'Se creó el turno con éxito!',
+        `El turno será el día ${turno.Fecha.toLocaleDateString()} en la sala: ${turno.Sala}.`,
+        'success'
+      )
+    });
   }
 
   TraerClientes() {

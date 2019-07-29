@@ -1,0 +1,15 @@
+<h3 mat-dialog-title>Observaciones del paciente:</h3>
+<mat-divider></mat-divider>
+<div mat-dialog-content class="mb-3 mt-2">
+  <div class="row justify-content-center align-self-center">
+    <mat-form-field>
+      <textarea matInput placeholder="Observación" [formControl]="observacionCtrol" required></textarea>
+      <mat-error *ngIf="observacionCtrol.hasError('required')">Por favor ingrese una observación </mat-error>
+    </mat-form-field>
+  </div>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="aceptar()"
+    [disabled]="observacionCtrol.hasError('required')">Aceptar</button>
+</div>

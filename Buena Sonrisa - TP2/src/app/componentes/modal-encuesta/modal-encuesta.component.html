@@ -1,12 +1,33 @@
-<!-- <h1 mat-dialog-title>Alumnos inscriptos a {{materia.Nombre}}</h1>
-<div mat-dialog-content>
-  <mat-list>
-    <mat-list-item *ngFor="let alumno of materia.Alumnos">
-      <p matLine> {{alumno['nombre']}} </p>
-    </mat-list-item>
-    <p matLine *ngIf="materia.Alumnos.length == 0"> No hay ningún alumno inscripto </p>
-  </mat-list>
-</div>
-<div mat-dialog-actions align="center">
-  <button mat-button (click)="onNoClick()" cdkFocusInitial>Aceptar</button>
-</div> -->
+<h3 mat-dialog-title>Como fue el turno con el Especialista {{encuesta.NombreEspecialista}}?</h3>
+<mat-divider></mat-divider>
+<div mat-dialog-content class="mb-2 mt-2">
+  <div class="row justify-content-center align-self-center">
+    <div class="col-md-1"></div>
+      <div class="col-md-5 justify-content-center align-self-center">
+        <mat-form-field>
+          <mat-label>Puntuación de la consulta</mat-label>
+          <mat-select [formControl]="puntuacionCtrol" required>
+            <mat-option value="1">Muy mala</mat-option>
+            <mat-option value="2">Mala</mat-option>
+            <mat-option value="3">Normal</mat-option>
+            <mat-option value="4">Buena</mat-option>
+            <mat-option value="5">Muy buena</mat-option>
+          </mat-select>
+          <mat-error *ngIf="puntuacionCtrol.hasError('required')">Por favor seleccione una puntuación</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-5 justify-content-center align-self-center">
+        <mat-form-field>
+          <textarea matInput placeholder="Dejá tu opinión" [formControl]="opinionCtrol" required></textarea>
+          <mat-error *ngIf="opinionCtrol.hasError('required')">Por favor ingrese una opinión </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-1"></div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button color="primary" (click)="aceptar()"
+      [disabled]="opinionCtrol.hasError('required') || puntuacionCtrol.hasError('required')">Aceptar</button>
+  </div>

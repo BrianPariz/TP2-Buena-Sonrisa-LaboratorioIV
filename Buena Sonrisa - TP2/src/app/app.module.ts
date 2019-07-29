@@ -30,6 +30,8 @@ import { TurnoComponent } from './componentes/turno/turno.component';
 import { ModalEncuestaComponent } from './componentes/modal-encuesta/modal-encuesta.component';
 
 import { RecaptchaModule } from 'ng-recaptcha';
+import { ModalObservacionesComponent } from './componentes/modal-observaciones/modal-observaciones.component';
+import { ListaSalasComponent } from './componentes/lista-salas/lista-salas.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { RecaptchaModule } from 'ng-recaptcha';
     TurnoCreacionComponent,
     TurnoListaComponent,
     TurnoComponent,
-    ModalEncuestaComponent
+    ModalEncuestaComponent,
+    ModalObservacionesComponent,
+    ListaSalasComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +76,10 @@ import { RecaptchaModule } from 'ng-recaptcha';
   exports: [
     MaterialModule,
     SimpleNotificationsModule
+  ],
+  entryComponents: [
+    ModalEncuestaComponent,
+    ModalObservacionesComponent
   ],
   providers: [AuthGuardService],
   bootstrap: [AppComponent]
