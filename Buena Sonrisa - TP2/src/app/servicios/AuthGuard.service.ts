@@ -22,7 +22,7 @@ export class AuthGuardService implements CanActivate {
     }
 
     if (logeado) {
-      if (url == '/administracion') {
+      if (url == '/administracion' || url == '/estadisticas') {
         if (this.usuarioService.usuario.Perfil == Perfil.Administrador) {
           return true;
         }

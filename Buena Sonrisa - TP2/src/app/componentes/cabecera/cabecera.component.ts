@@ -30,7 +30,6 @@ export class CabeceraComponent implements OnInit {
   TraerUsuarioActual() {
     this.usuarioService.EstaLogeado().subscribe(user => {
       if (user) {
-        debugger;
         this.dataApi.TraerUno(user.uid, 'usuarios').pipe(take(1)).subscribe(userx => {
 
           if (userx) {

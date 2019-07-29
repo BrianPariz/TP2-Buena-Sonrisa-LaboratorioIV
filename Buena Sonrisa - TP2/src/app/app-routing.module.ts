@@ -8,6 +8,7 @@ import { AuthGuardService } from './servicios/AuthGuard.service';
 import { ListaUsuariosComponent } from './componentes/lista-usuarios/lista-usuarios.component';
 import { TurnoComponent } from './componentes/turno/turno.component';
 import { ListaSalasComponent } from './componentes/lista-salas/lista-salas.component';
+import { EstadisticasComponent } from './componentes/estadisticas/estadisticas.component';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'registrarse', component: RegistroComponent, canActivate: [AuthGuardService] },
   { path: 'saladeespera', component: ListaSalasComponent, canActivate: [AuthGuardService] },
   { path: 'turnos', component: TurnoComponent, canActivate: [AuthGuardService] },
+  { path: 'estadisticas', component: EstadisticasComponent, canActivate: [AuthGuardService] },
   { path: 'administracion', component: ListaUsuariosComponent, canActivate: [AuthGuardService] },
   { path: '404', component: Error404Component },
   { path: '**', redirectTo: '404' }

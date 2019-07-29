@@ -35,7 +35,6 @@ export class RegistroComponent implements OnInit {
   ngOnInit() { }
 
   Registrarse() {
-    debugger;
     this.usuario.Perfil = Perfil[(<HTMLInputElement>document.getElementById("perfil")).value];
 
     if (this.usuario.Perfil == Perfil.Especialista) {

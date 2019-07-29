@@ -32,6 +32,7 @@ import { ModalEncuestaComponent } from './componentes/modal-encuesta/modal-encue
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ModalObservacionesComponent } from './componentes/modal-observaciones/modal-observaciones.component';
 import { ListaSalasComponent } from './componentes/lista-salas/lista-salas.component';
+import { EstadisticasComponent } from './componentes/estadisticas/estadisticas.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ListaSalasComponent } from './componentes/lista-salas/lista-salas.compo
     TurnoComponent,
     ModalEncuestaComponent,
     ModalObservacionesComponent,
-    ListaSalasComponent
+    ListaSalasComponent,
+    EstadisticasComponent
   ],
   imports: [
     BrowserModule,
