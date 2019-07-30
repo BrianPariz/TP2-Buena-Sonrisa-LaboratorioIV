@@ -6,6 +6,7 @@ import { TurnoInterface, EstadoTurno } from 'src/app/clases/Turno';
 import { UsuarioService } from 'src/app/servicios/Usuario.service';
 import { NotificationsService } from 'angular2-notifications';
 import Swal from "sweetalert2";
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-turno-creacion',
@@ -42,7 +43,7 @@ export class TurnoCreacionComponent implements OnInit {
   }
 
   CrearTurno() {
-    this.dataApi.TraerTodos('consultorios').subscribe(consultorios => {
+    this.dataApi.TraerTodos('consultorios').pipe(take(1)).subscribe(consultorios => {
 
       let consultorio = consultorios[Math.floor((Math.random() * 5))];
       let especialista = this.especialistaForm.value;

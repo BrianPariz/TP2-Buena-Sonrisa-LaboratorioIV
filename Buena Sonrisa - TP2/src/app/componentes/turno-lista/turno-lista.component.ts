@@ -62,7 +62,8 @@ export class TurnoListaComponent implements OnInit {
       NombreEspecialista: turno.NombreEspecialista,
       UidCliente: turno.UidCliente,
       UidEspecialista: turno.UidEspecialista,
-      Puntuacion: 0,
+      PuntuacionClinica: 0,
+      PuntuacionEspecialista: 0,
       Opinion: ""
     }
 

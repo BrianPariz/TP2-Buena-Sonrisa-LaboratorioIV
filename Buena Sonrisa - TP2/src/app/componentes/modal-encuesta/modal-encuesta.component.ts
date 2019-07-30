@@ -14,8 +14,9 @@ import { FormControl, Validators } from '@angular/forms';
 export class ModalEncuestaComponent {
 
   private encuesta: EncuestaInterface;
-  private puntuacionCtrol = new FormControl('', [Validators.required]);
-  private opinionCtrol = new FormControl('', Validators.required);
+  private puntuacionCtrol = new FormControl('', Validators.required);
+  private puntuacionClinicaCtrol = new FormControl('', Validators.required);
+  private opinionCtrol = new FormControl('', [Validators.required, Validators.maxLength(66)]);
 
   constructor(public dialogRef: MatDialogRef<TurnoListaComponent>
     , @Inject(MAT_DIALOG_DATA) public _Encuesta: EncuestaInterface) {
@@ -27,7 +28,8 @@ export class ModalEncuestaComponent {
   }
 
   aceptar() {
-    this.encuesta.Puntuacion = this.puntuacionCtrol.value;
+    this.encuesta.PuntuacionClinica = this.puntuacionCtrol.value;
+    this.encuesta.PuntuacionEspecialista = this.puntuacionClinicaCtrol.value;
     this.encuesta.Opinion = this.opinionCtrol.value;
     this.dialogRef.close(this.encuesta);
   }
