@@ -9,6 +9,9 @@ import { ListaUsuariosComponent } from './componentes/lista-usuarios/lista-usuar
 import { TurnoComponent } from './componentes/turno/turno.component';
 import { ListaSalasComponent } from './componentes/lista-salas/lista-salas.component';
 import { EstadisticasComponent } from './componentes/estadisticas/estadisticas.component';
+import { EmpleadosEstadisticaComponent } from './componentes/empleados-estadistica/empleados-estadistica.component';
+import { TurnosEstadisticaComponent } from './componentes/turnos-estadistica/turnos-estadistica.component';
+import { EspecialidadEstadisticaComponent } from './componentes/especialidad-estadistica/especialidad-estadistica.component';
 
 const routes: Routes = [
   { path: '', component: InicioComponent },
@@ -16,21 +19,21 @@ const routes: Routes = [
   { path: 'registrarse', component: RegistroComponent, canActivate: [AuthGuardService] },
   { path: 'saladeespera', component: ListaSalasComponent, canActivate: [AuthGuardService] },
   { path: 'turnos', component: TurnoComponent, canActivate: [AuthGuardService] },
-  { path: 'estadisticas', component: EstadisticasComponent, canActivate: [AuthGuardService] },
+  // { path: 'estadisticas', component: EstadisticasComponent, canActivate: [AuthGuardService] },
+  {
+    path: 'estadisticas',
+    component: EstadisticasComponent,
+    canActivate: [AuthGuardService],
+    children:
+      [
+        { path: 'empleados', component: EmpleadosEstadisticaComponent },
+        { path: 'turnos', component: TurnosEstadisticaComponent },
+        { path: 'especialidades', component: EspecialidadEstadisticaComponent }
+      ]
+  },
   { path: 'administracion', component: ListaUsuariosComponent, canActivate: [AuthGuardService] },
   { path: '404', component: Error404Component },
   { path: '**', redirectTo: '404' }
-  // {
-  //   path: '',
-  //   component: PrincipalComponent,
-  //   children:
-  //     [
-  //       { path: 'inicio', component: InicioComponent },
-  //       { path: 'logearse', component: LoginComponent },
-  //       { path: 'registrarse', component: LoginComponent }
-  //     ]
-  // }
-
 ];
 
 @NgModule({

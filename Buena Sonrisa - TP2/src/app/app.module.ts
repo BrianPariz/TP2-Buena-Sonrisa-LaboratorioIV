@@ -33,6 +33,9 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { ModalObservacionesComponent } from './componentes/modal-observaciones/modal-observaciones.component';
 import { ListaSalasComponent } from './componentes/lista-salas/lista-salas.component';
 import { EstadisticasComponent } from './componentes/estadisticas/estadisticas.component';
+import { EmpleadosEstadisticaComponent } from './componentes/empleados-estadistica/empleados-estadistica.component';
+import { TurnosEstadisticaComponent } from './componentes/turnos-estadistica/turnos-estadistica.component';
+import { EspecialidadEstadisticaComponent } from './componentes/especialidad-estadistica/especialidad-estadistica.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,10 @@ import { EstadisticasComponent } from './componentes/estadisticas/estadisticas.c
     ModalEncuestaComponent,
     ModalObservacionesComponent,
     ListaSalasComponent,
-    EstadisticasComponent
+    EstadisticasComponent,
+    EmpleadosEstadisticaComponent,
+    TurnosEstadisticaComponent,
+    EspecialidadEstadisticaComponent
   ],
   imports: [
     BrowserModule,

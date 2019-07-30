@@ -6,6 +6,7 @@ import { UsuarioInterface, Perfil } from '../clases/Usuario';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { NotificationsService } from 'angular2-notifications';
 import { DataApiService } from './DataApi.service';
+import { EstEmpleados } from '../clases/EstEmpleados';
 
 
 @Injectable({
@@ -82,6 +83,8 @@ export class UsuarioService {
                                     this.DeslogearUsuario();
                                 }
                                 else {
+                                    var estEmpl = new EstEmpleados();
+
                                     this.usuario.Uid = userx.Uid;
                                     this.usuario.Email = userx.Email;
                                     this.usuario.ImagenUrl = userx.ImagenUrl;
