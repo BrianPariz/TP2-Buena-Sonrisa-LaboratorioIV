@@ -1,22 +1,30 @@
-<table mat-table [dataSource]="data" class="mat-elevation-z8">
+<!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-  <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+  <ng-container matColumnDef="Nombre">
+    <th mat-header-cell *matHeaderCellDef> Nombre </th>
+    <td mat-cell *matCellDef="let element"> {{element.NombreEmpleado}} </td>
   </ng-container>
 
-  <!-- Weight Column -->
-  <ng-container matColumnDef="weight">
-    <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+  <ng-container matColumnDef="Dia">
+    <th mat-header-cell *matHeaderCellDef> Día </th>
+    <td mat-cell *matCellDef="let element"> {{element.Dia}} </td>
   </ng-container>
 
-  <!-- Symbol Column -->
-  <ng-container matColumnDef="symbol">
-    <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+  <ng-container matColumnDef="Hora">
+    <th mat-header-cell *matHeaderCellDef> Horario </th>
+    <td mat-cell *matCellDef="let element"> {{element.Hora}} </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
-</table>
+</table> -->
+
+<table mat-table [dataSource]="data" class="mat-elevation-z8">
+    <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+      <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+      <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  </table>

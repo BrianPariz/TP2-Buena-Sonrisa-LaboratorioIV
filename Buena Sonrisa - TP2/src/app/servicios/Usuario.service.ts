@@ -6,8 +6,6 @@ import { UsuarioInterface, Perfil } from '../clases/Usuario';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { NotificationsService } from 'angular2-notifications';
 import { DataApiService } from './DataApi.service';
-import { EstEmpleados } from '../clases/EstEmpleados';
-
 
 @Injectable({
     providedIn: 'root'
@@ -83,7 +81,20 @@ export class UsuarioService {
                                     this.DeslogearUsuario();
                                 }
                                 else {
-                                    var estEmpl = new EstEmpleados();
+
+                                    var today = new Date();
+                                    var date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+
+                                    var today = new Date();
+                                    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+                                    var estEmpl = {
+                                        Empleado: userx.Nombre,
+                                        Dia: date,
+                                        Horario: time
+                                    }
+
+                                    this.dataApi.AgregarUno(estEmpl, 'logs');
 
                                     this.usuario.Uid = userx.Uid;
                                     this.usuario.Email = userx.Email;

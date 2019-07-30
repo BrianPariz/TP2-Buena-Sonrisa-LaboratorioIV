@@ -9,17 +9,16 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class EmpleadosEstadisticaComponent implements OnInit {
 
-  private displayedColumns: string[] = ['Nombre', 'Nombre', 'Email'];
-  private empleadosEst;
-  private dataSource;
-
   constructor(private dataApi: DataApiService) { }
 
+  displayedColumns: string[] = ['Empleado', 'Dia', 'Horario'];
+  columnsToDisplay: string[] = this.displayedColumns.slice();
+  data;
+
   ngOnInit() {
-    this.dataApi.TraerTodos('estEmpleados')
-      .subscribe(estempl => {
-        this.empleadosEst = estempl;
-        this.dataSource = new MatTableDataSource(this.empleadosEst);
+    this.dataApi.TraerTodos('logs')
+      .subscribe(logs => {
+        this.data = new MatTableDataSource(logs);
       });
   }
 }
