@@ -82,19 +82,22 @@ export class UsuarioService {
                                 }
                                 else {
 
-                                    var today = new Date();
-                                    var date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
+                                    if (userx.Perfil == Perfil.Especialista || userx.Perfil == Perfil.Recepcionista) {
+                                        var today = new Date();
+                                        var date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
 
-                                    var today = new Date();
-                                    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                                        var today = new Date();
+                                        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-                                    var estEmpl = {
-                                        Empleado: userx.Nombre,
-                                        Dia: date,
-                                        Horario: time
+                                        var estEmpl = {
+                                            Empleado: userx.Nombre,
+                                            Dia: date,
+                                            Horario: time,
+                                            datetime: Date.now()
+                                        }
+
+                                        this.dataApi.AgregarUno(estEmpl, 'logs');
                                     }
-
-                                    this.dataApi.AgregarUno(estEmpl, 'logs');
 
                                     this.usuario.Uid = userx.Uid;
                                     this.usuario.Email = userx.Email;

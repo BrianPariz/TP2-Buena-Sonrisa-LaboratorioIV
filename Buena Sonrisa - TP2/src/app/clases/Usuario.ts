@@ -8,7 +8,7 @@ export enum Perfil {
 export enum Especialidad {
     Oncologia = 'Oncología',
     Dermatologia = 'Dermatología',
-    Dentista = 'Dentista',
+    Odontologia = 'Odontología',
     Psicologia = 'Psicología'
 }
 

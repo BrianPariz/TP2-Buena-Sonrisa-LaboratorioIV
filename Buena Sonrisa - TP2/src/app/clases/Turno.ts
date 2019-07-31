@@ -19,4 +19,7 @@ export interface TurnoInterface {
     ObservacionesEspecialista: string;
     Consultorio: string;
     ConsultorioId: string;
+    CreadoPorCliente: boolean;
+    UidRecepcionista: string;
+    NombreRecepcionista: string;
 }

@@ -1,3 +1,43 @@
-<p>
-  especialidad-estadistica works!
-</p>
+<mat-accordion>
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Especialidad más y menos usada
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <strong>Más usada:&nbsp;</strong>{{masUsada}}<br>
+    <strong>Menos usada:&nbsp;</strong>{{menosUsada}}
+  </mat-expansion-panel>
+
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Mejores Comentarios
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-list role="list">
+      <mat-list-item *ngFor="let mc of mejoresComentarios">
+        <strong>{{mc.NombreCliente}}</strong><br><br>
+        {{mc.Comentario}}
+      </mat-list-item>
+    </mat-list>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Peores Comentarios
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+  
+      <mat-list role="list">
+        <mat-list-item *ngFor="let mc of peoresComentarios">
+          <strong>{{mc.NombreCliente}}</strong><br><br>
+          {{mc.Comentario}}
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+
+</mat-accordion>

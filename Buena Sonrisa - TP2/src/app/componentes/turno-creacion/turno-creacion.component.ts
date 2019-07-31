@@ -48,6 +48,15 @@ export class TurnoCreacionComponent implements OnInit {
       let consultorio = consultorios[Math.floor((Math.random() * 5))];
       let especialista = this.especialistaForm.value;
       let cliente = this.clienteForm.value;
+      let creadoCliente = true;
+      let UidRecepcionista = null;
+      let NombreRecepcionista = null;
+
+      if (this.perfil != Perfil.Cliente) {
+        creadoCliente = false;
+        UidRecepcionista = this.user.Uid;
+        NombreRecepcionista = this.user.Nombre;
+      }
 
       let turno: TurnoInterface = {
         UidCliente: cliente.Uid,
@@ -60,7 +69,10 @@ export class TurnoCreacionComponent implements OnInit {
         Encuesta: null,
         ObservacionesEspecialista: "",
         Consultorio: consultorio.Codigo,
-        ConsultorioId: consultorio.id
+        ConsultorioId: consultorio.id,
+        CreadoPorCliente: creadoCliente,
+        UidRecepcionista: UidRecepcionista,
+        NombreRecepcionista: NombreRecepcionista
       }
 
       this.dataApi.AgregarUno(turno, 'turnos');
