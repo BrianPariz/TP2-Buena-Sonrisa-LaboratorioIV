@@ -13,21 +13,20 @@
                     *ngIf="estaLogeado && administrador">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/chat">Chat</a>
                 </li> -->
-                <li class="nav-item mx-0 mx-lg-1"
-                    *ngIf="estaLogeado && perfil == 'Administrador'">
+                <li class="nav-item mx-0 mx-lg-1" *ngIf="estaLogeado && perfil == 'Administrador'">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/administracion">Administración</a>
                 </li>
-                <li class="nav-item mx-0 mx-lg-1"
-                    *ngIf="estaLogeado && perfil == 'Administrador'">
+                <li class="nav-item mx-0 mx-lg-1" *ngIf="estaLogeado && perfil == 'Administrador'">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/estadisticas/empleados">Estadísticas</a>
                 </li>
-                <li class="nav-item mx-0 mx-lg-1"
-                    *ngIf="estaLogeado && perfil == 'Recepcionista'">
+                <li class="nav-item mx-0 mx-lg-1" *ngIf="estaLogeado && perfil == 'Recepcionista'">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/saladeespera">Sala de Espera</a>
                 </li>
-                <li class="nav-item mx-0 mx-lg-1"
-                    *ngIf="estaLogeado && perfil != 'Administrador'">
+                <li class="nav-item mx-0 mx-lg-1" *ngIf="estaLogeado && perfil != 'Administrador'">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/turnos">Turnos</a>
+                </li>
+                <li class="nav-item mx-0 mx-lg-1" *ngIf="estaLogeado && perfil == 'Cliente'">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded" (click)="emergencia()">Emergencia</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1" *ngIf="!estaLogeado">
                     <a class="nav-link py-3 px-0 px-lg-3 rounded" routerLink="/registrarse">Creá tu cuenta</a>

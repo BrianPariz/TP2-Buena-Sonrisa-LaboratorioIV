@@ -91,7 +91,6 @@ export class EspecialidadEstadisticaComponent implements OnInit {
 
       var maxValue = Math.max(...puntuacionesEsp);
       var minValue = Math.min(...puntuacionesEsp);
-      debugger;
 
       turnosEncuestados.forEach(element => {
         let comentario = {

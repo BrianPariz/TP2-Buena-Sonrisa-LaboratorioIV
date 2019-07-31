@@ -36,6 +36,8 @@ import { EstadisticasComponent } from './componentes/estadisticas/estadisticas.c
 import { EmpleadosEstadisticaComponent } from './componentes/empleados-estadistica/empleados-estadistica.component';
 import { TurnosEstadisticaComponent } from './componentes/turnos-estadistica/turnos-estadistica.component';
 import { EspecialidadEstadisticaComponent } from './componentes/especialidad-estadistica/especialidad-estadistica.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AgmCoreModule} from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -79,7 +81,11 @@ import { EspecialidadEstadisticaComponent } from './componentes/especialidad-est
       pauseOnHover: true,
       clickToClose: true
     }),
-    RecaptchaModule
+    RecaptchaModule,
+    HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey: ''
+    })
   ],
   exports: [
     MaterialModule,

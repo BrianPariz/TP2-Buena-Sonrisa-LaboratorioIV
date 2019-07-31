@@ -1,25 +1,12 @@
-<!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-  <ng-container matColumnDef="Nombre">
-    <th mat-header-cell *matHeaderCellDef> Nombre </th>
-    <td mat-cell *matCellDef="let element"> {{element.NombreEmpleado}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="Dia">
-    <th mat-header-cell *matHeaderCellDef> Día </th>
-    <td mat-cell *matCellDef="let element"> {{element.Dia}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="Hora">
-    <th mat-header-cell *matHeaderCellDef> Horario </th>
-    <td mat-cell *matCellDef="let element"> {{element.Hora}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
-</table> -->
-<h2>Horarios de Ingreso de los Empleados</h2> <button mat-raised-button class="mb-2 float-right" color="primary"
-  (click)="exportAsExcel()">Exportar Excel</button>
+<div class="row">
+  <div class="col-md">
+    <h2>Horarios de Ingreso de los Empleados</h2>
+  </div>
+  <div class="col-md">
+    <button mat-raised-button class="mb-2 ml-2 float-right btnExcel" (click)="exportExcel()">Exportar Excel</button>
+    <button mat-raised-button class="mb-2 float-right" color="warn" (click)="exportPdf()">Exportar PDF</button>
+  </div>
+</div>
 <div #TABLE>
   <table mat-table [dataSource]="data" class="mat-elevation-z8">
     <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
