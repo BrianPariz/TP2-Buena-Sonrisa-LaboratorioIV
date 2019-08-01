@@ -1757,15 +1757,16 @@ let TurnoCreacionComponent = class TurnoCreacionComponent {
             };
             this.dataApi.AgregarUno(turno, 'turnos');
             sweetalert2__WEBPACK_IMPORTED_MODULE_8___default.a.fire('Se creó el turno con éxito!', `El turno será el día ${turno.Fecha.toLocaleDateString()} en el consultorio: ${turno.Consultorio}.`, 'success');
-            this.fechaForm.setValue(null);
-            this.especialistaForm.setValue(null);
-            if (this.perfil == src_app_clases_Usuario__WEBPACK_IMPORTED_MODULE_3__["Perfil"].Cliente) {
-                this.clienteForm.setValue(this.user);
-            }
-            else {
-                this.clienteForm.setValue(null);
-            }
-            this.especialistas = [];
+            this.TraerEspecialistasPorFecha();
+            // this.fechaForm.setValue("");
+            // this.especialistaForm.setValue("");
+            // if (this.perfil == Perfil.Cliente) {
+            //   this.clienteForm.setValue(this.user);
+            // }
+            // else {
+            //   this.clienteForm.setValue("");
+            // }
+            // this.especialistas = [];
         });
     }
     TraerClientes() {
@@ -1774,17 +1775,22 @@ let TurnoCreacionComponent = class TurnoCreacionComponent {
         });
     }
     TraerEspecialistasPorFecha() {
-        this.especialistaForm.setValue(null);
+        console.log("form antes: " + this.especialistaForm.value);
+        console.log("especialistas antes: " + this.especialistas.length);
         this.especialistas = [];
-        this.dataApi.TraerTodos('turnos')
+        this.especialistaForm.setValue(null);
+        console.log("especialistas despues: " + this.especialistas.length);
+        console.log("form despues: " + this.especialistaForm.value);
+        this.especialistaForm.reset();
+        this.dataApi.TraerTodos('turnos').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["take"])(1))
             .subscribe(_turnos => {
-            var turnos;
+            var turnos = [];
             var fechaSelected = this.fechaForm.value;
             turnos = _turnos.filter(x => x.Fecha.toDate().getFullYear() == fechaSelected.getFullYear() &&
                 x.Fecha.toDate().getMonth() == fechaSelected.getMonth() &&
                 x.Fecha.toDate().getDate() == fechaSelected.getDate());
-            var especialistasAux;
-            this.dataApi.TraerTodos('usuarios').subscribe(usuarios => {
+            var especialistasAux = [];
+            this.dataApi.TraerTodos('usuarios').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["take"])(1)).subscribe(usuarios => {
                 especialistasAux = usuarios.filter(x => x.Perfil == src_app_clases_Usuario__WEBPACK_IMPORTED_MODULE_3__["Perfil"].Especialista && x.Activo);
                 especialistasAux.forEach(element => {
                     if (turnos.filter(x => x.UidEspecialista == element.Uid).length < 3) {

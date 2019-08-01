@@ -83,15 +83,16 @@ export class TurnoCreacionComponent implements OnInit {
         'success'
       )
 
-      this.fechaForm.setValue(null);
-      this.especialistaForm.setValue(null);
-      if (this.perfil == Perfil.Cliente) {
-        this.clienteForm.setValue(this.user);
-      }
-      else {
-        this.clienteForm.setValue(null);
-      }
-      this.especialistas = [];
+      this.TraerEspecialistasPorFecha();
+      // this.fechaForm.setValue("");
+      // this.especialistaForm.setValue("");
+      // if (this.perfil == Perfil.Cliente) {
+      //   this.clienteForm.setValue(this.user);
+      // }
+      // else {
+      //   this.clienteForm.setValue("");
+      // }
+      // this.especialistas = [];
     });
   }
 
@@ -102,12 +103,17 @@ export class TurnoCreacionComponent implements OnInit {
   }
 
   TraerEspecialistasPorFecha() {
-    this.especialistaForm.setValue(null);
+    console.log("form antes: " + this.especialistaForm.value);
+    console.log("especialistas antes: " + this.especialistas.length);
     this.especialistas = [];
+    this.especialistaForm.setValue(null);
+    console.log("especialistas despues: " + this.especialistas.length);
+    console.log("form despues: " + this.especialistaForm.value);
+    this.especialistaForm.reset();
 
-    this.dataApi.TraerTodos('turnos')
+    this.dataApi.TraerTodos('turnos').pipe(take(1))
       .subscribe(_turnos => {
-        var turnos;
+        var turnos = [];
         var fechaSelected = this.fechaForm.value;
         turnos = _turnos.filter(x =>
           x.Fecha.toDate().getFullYear() == fechaSelected.getFullYear() &&
@@ -115,8 +121,8 @@ export class TurnoCreacionComponent implements OnInit {
           x.Fecha.toDate().getDate() == fechaSelected.getDate()
         );
 
-        var especialistasAux;
-        this.dataApi.TraerTodos('usuarios').subscribe(usuarios => {
+        var especialistasAux = [];
+        this.dataApi.TraerTodos('usuarios').pipe(take(1)).subscribe(usuarios => {
           especialistasAux = usuarios.filter(x => x.Perfil == Perfil.Especialista && x.Activo);
           especialistasAux.forEach(element => {
             if (turnos.filter(x => x.UidEspecialista == element.Uid).length < 3) {

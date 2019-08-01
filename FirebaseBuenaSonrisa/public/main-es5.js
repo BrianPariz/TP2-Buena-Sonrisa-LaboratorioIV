@@ -1798,15 +1798,16 @@ var TurnoCreacionComponent = /** @class */ (function () {
             };
             _this.dataApi.AgregarUno(turno, 'turnos');
             sweetalert2__WEBPACK_IMPORTED_MODULE_8___default.a.fire('Se creó el turno con éxito!', "El turno ser\u00E1 el d\u00EDa " + turno.Fecha.toLocaleDateString() + " en el consultorio: " + turno.Consultorio + ".", 'success');
-            _this.fechaForm.setValue(null);
-            _this.especialistaForm.setValue(null);
-            if (_this.perfil == src_app_clases_Usuario__WEBPACK_IMPORTED_MODULE_3__["Perfil"].Cliente) {
-                _this.clienteForm.setValue(_this.user);
-            }
-            else {
-                _this.clienteForm.setValue(null);
-            }
-            _this.especialistas = [];
+            _this.TraerEspecialistasPorFecha();
+            // this.fechaForm.setValue("");
+            // this.especialistaForm.setValue("");
+            // if (this.perfil == Perfil.Cliente) {
+            //   this.clienteForm.setValue(this.user);
+            // }
+            // else {
+            //   this.clienteForm.setValue("");
+            // }
+            // this.especialistas = [];
         });
     };
     TurnoCreacionComponent.prototype.TraerClientes = function () {
@@ -1817,19 +1818,24 @@ var TurnoCreacionComponent = /** @class */ (function () {
     };
     TurnoCreacionComponent.prototype.TraerEspecialistasPorFecha = function () {
         var _this = this;
-        this.especialistaForm.setValue(null);
+        console.log("form antes: " + this.especialistaForm.value);
+        console.log("especialistas antes: " + this.especialistas.length);
         this.especialistas = [];
-        this.dataApi.TraerTodos('turnos')
+        this.especialistaForm.setValue(null);
+        console.log("especialistas despues: " + this.especialistas.length);
+        console.log("form despues: " + this.especialistaForm.value);
+        this.especialistaForm.reset();
+        this.dataApi.TraerTodos('turnos').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["take"])(1))
             .subscribe(function (_turnos) {
-            var turnos;
+            var turnos = [];
             var fechaSelected = _this.fechaForm.value;
             turnos = _turnos.filter(function (x) {
                 return x.Fecha.toDate().getFullYear() == fechaSelected.getFullYear() &&
                     x.Fecha.toDate().getMonth() == fechaSelected.getMonth() &&
                     x.Fecha.toDate().getDate() == fechaSelected.getDate();
             });
-            var especialistasAux;
-            _this.dataApi.TraerTodos('usuarios').subscribe(function (usuarios) {
+            var especialistasAux = [];
+            _this.dataApi.TraerTodos('usuarios').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["take"])(1)).subscribe(function (usuarios) {
                 especialistasAux = usuarios.filter(function (x) { return x.Perfil == src_app_clases_Usuario__WEBPACK_IMPORTED_MODULE_3__["Perfil"].Especialista && x.Activo; });
                 especialistasAux.forEach(function (element) {
                     if (turnos.filter(function (x) { return x.UidEspecialista == element.Uid; }).length < 3) {
