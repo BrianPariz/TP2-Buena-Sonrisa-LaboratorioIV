@@ -38,6 +38,7 @@ import { TurnosEstadisticaComponent } from './componentes/turnos-estadistica/tur
 import { EspecialidadEstadisticaComponent } from './componentes/especialidad-estadistica/especialidad-estadistica.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AgmCoreModule} from '@agm/core';
+import { BotonSeleccionadoDirective } from './directivas/boton-seleccionado.directiva';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { AgmCoreModule} from '@agm/core';
     EstadisticasComponent,
     EmpleadosEstadisticaComponent,
     TurnosEstadisticaComponent,
+    BotonSeleccionadoDirective,
     EspecialidadEstadisticaComponent
   ],
   imports: [
@@ -84,7 +86,7 @@ import { AgmCoreModule} from '@agm/core';
     RecaptchaModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
-      apiKey: ''
+      apiKey: environment.googleApiKey.apiKey
     })
   ],
   exports: [

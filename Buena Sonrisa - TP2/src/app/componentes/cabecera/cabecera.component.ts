@@ -4,6 +4,10 @@ import { DataApiService } from 'src/app/servicios/DataApi.service';
 import { take } from 'rxjs/operators';
 import { Perfil } from 'src/app/clases/Usuario';
 import { google } from '@agm/core/services/google-maps-types';
+import { HttpClient } from '@angular/common/http';
+import { LocationResponse } from 'src/app/clases/LocationResponse';
+import { NotificationsService } from 'angular2-notifications';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-cabecera',
@@ -22,7 +26,7 @@ export class CabeceraComponent implements OnInit {
   nombre = "";
   perfil: Perfil;
 
-  constructor(private usuarioService: UsuarioService, private dataApi: DataApiService) { }
+  constructor(private usuarioService: UsuarioService, private dataApi: DataApiService, private http: HttpClient, private ns: NotificationsService) { }
 
   ngOnInit() {
     this.TraerUsuarioActual();
@@ -68,37 +72,24 @@ export class CabeceraComponent implements OnInit {
     this.perfil = null;
   }
 
-  // geocoder;
-
-  // initialize() {
-  //   this.geocoder = new google.maps.Geocoder();
-  // }
-
   emergencia() {
-
     navigator.geolocation.getCurrentPosition((position) => {
-      debugger;
-      var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
+      var url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${environment.googleApiKey.apiKey}`;
 
-      //https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
-
-      // this.geocoder.geocode({ 'latLng': latlng }, function (results, status) {
-      //   debugger;
-      //   if (status == google.maps.GeocoderStatus.OK) {
-      //     console.log(results)
-      //     if (results[1]) {
-      //       //formatted address
-      //       var address = results[0].formatted_address;
-      //       alert("address = " + address);
-      //     } else {
-      //       alert("No results found");
-      //     }
-      //   } else {
-      //     alert("Geocoder failed due to: " + status);
-      //   }
-      // });
-
-
+      this.http.get(url).subscribe((location: LocationResponse) => {
+        debugger;
+        if (location.status == "OK") {
+          let adress = location.plus_code.compound_code;
+          this.dataApi.AgregarUno("localizacion", adress);
+          this.ns.success(`Ya se envió la ambulancia a su ubicación ${adress}, aguarde 20 minutos.`);
+        }
+        else {
+          console.log(location);
+          this.ns.error("Error", "Sucedió un error al conectarse con el servidor.");
+        }
+      });
     });
   }
 }

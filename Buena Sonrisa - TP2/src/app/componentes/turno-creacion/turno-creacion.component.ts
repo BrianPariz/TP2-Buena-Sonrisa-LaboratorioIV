@@ -82,6 +82,16 @@ export class TurnoCreacionComponent implements OnInit {
         `El turno será el día ${turno.Fecha.toLocaleDateString()} en el consultorio: ${turno.Consultorio}.`,
         'success'
       )
+
+      this.fechaForm.setValue(null);
+      this.especialistaForm.setValue(null);
+      if (this.perfil == Perfil.Cliente) {
+        this.clienteForm.setValue(this.user);
+      }
+      else {
+        this.clienteForm.setValue(null);
+      }
+      this.especialistas = [];
     });
   }
 
@@ -91,40 +101,29 @@ export class TurnoCreacionComponent implements OnInit {
     });
   }
 
-  // countDuplicates(original) {
-  //   const uniqueItems = new Set();
-  //   const duplicates = new Set();
-  //   for (const value of original) {
-  //     if (uniqueItems.has(value)) {
-  //       duplicates.add(value);
-  //       uniqueItems.delete(value);
-  //     } else {
-  //       uniqueItems.add(value);
-  //     }
-  //   }
-  //   return duplicates.size;
-  // }
-
   TraerEspecialistasPorFecha() {
     this.especialistaForm.setValue(null);
-    this.dataApi.TraerTodos('usuarios').subscribe(usuarios => {
-      this.especialistas = usuarios.filter(x => x.Perfil == Perfil.Especialista && x.Activo);
-    });
+    this.especialistas = [];
 
-    //TODO TERMINAR ESTO
-    // this.dataApi.TraerTodos('turnos')
-    //   .subscribe(turnos => {
-    //     var auxEspecialistas = [];
-    //     var auxTurnos = [];
-    //     var countTurnosSameDate;
-    //     this.especialistas.forEach((especialista) => {
-    //       auxTurnos = turnos.filter(x => x.UidEspecialista == especialista.Uid);
+    this.dataApi.TraerTodos('turnos')
+      .subscribe(_turnos => {
+        var turnos;
+        var fechaSelected = this.fechaForm.value;
+        turnos = _turnos.filter(x =>
+          x.Fecha.toDate().getFullYear() == fechaSelected.getFullYear() &&
+          x.Fecha.toDate().getMonth() == fechaSelected.getMonth() &&
+          x.Fecha.toDate().getDate() == fechaSelected.getDate()
+        );
 
-    //       if (auxTurnos.length < 2)
-    //         auxEspecialistas.push(especialista);
-    //     });
-
-    //     this.especialistas = auxEspecialistas;
-    //   });
+        var especialistasAux;
+        this.dataApi.TraerTodos('usuarios').subscribe(usuarios => {
+          especialistasAux = usuarios.filter(x => x.Perfil == Perfil.Especialista && x.Activo);
+          especialistasAux.forEach(element => {
+            if (turnos.filter(x => x.UidEspecialista == element.Uid).length < 3) {
+              this.especialistas.push(element);
+            }
+          });
+        });
+      });
   }
 }
