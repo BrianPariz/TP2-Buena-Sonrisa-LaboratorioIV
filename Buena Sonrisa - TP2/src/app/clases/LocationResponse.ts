@@ -8,3 +8,8 @@ export interface LocationPlusCode {
     compound_code: string;
     global_code: string;
 }
+
+export interface LocationSave {
+    address_plus: string;
+    firstResult;
+}

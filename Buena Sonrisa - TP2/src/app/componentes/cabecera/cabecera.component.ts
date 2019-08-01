@@ -5,7 +5,7 @@ import { take } from 'rxjs/operators';
 import { Perfil } from 'src/app/clases/Usuario';
 import { google } from '@agm/core/services/google-maps-types';
 import { HttpClient } from '@angular/common/http';
-import { LocationResponse } from 'src/app/clases/LocationResponse';
+import { LocationResponse, LocationSave } from 'src/app/clases/LocationResponse';
 import { NotificationsService } from 'angular2-notifications';
 import { environment } from 'src/environments/environment';
 
@@ -81,8 +81,13 @@ export class CabeceraComponent implements OnInit {
       this.http.get(url).subscribe((location: LocationResponse) => {
         debugger;
         if (location.status == "OK") {
-          let adress = location.plus_code.compound_code;
-          this.dataApi.AgregarUno("localizacion", adress);
+
+          let adress: LocationSave = {
+            address_plus: location.plus_code.compound_code,
+            firstResult: location.results[0]
+          }
+
+          this.dataApi.AgregarUno(adress, "localizacion");
           this.ns.success(`Ya se envió la ambulancia a su ubicación ${adress}, aguarde 20 minutos.`);
         }
         else {
