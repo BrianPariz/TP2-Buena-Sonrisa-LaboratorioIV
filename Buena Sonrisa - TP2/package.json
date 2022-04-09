@@ -31,7 +31,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
     "jspdf": "^1.5.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ng-recaptcha": "^4.3.0",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.5.2",
